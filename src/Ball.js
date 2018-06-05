@@ -15,8 +15,9 @@ class Ball extends Component{
 
     render(){
         return (
+            /*animated view holds the thing we want to animate*/
             <Animated.View style={this.position.getLayout()}>
-                {/* what element are we moving */}
+                {/* what element are we moving -- can place as much in this animated block as you want <text> <image> etc*/}
                 <View style={styles.ball}></View>
             </Animated.View>
         );
