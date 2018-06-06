@@ -115,13 +115,19 @@ class Deck extends Component {
 
     // render card
     renderCards() {
+        if(this.state.index >= this.props.data.length){
+            return this.props.renderNoMoreCards();
+        }
 
         // pass in the list of data (array)
         // for each item in that array it calls renderCard()
-        return this.props.data.map((item, index) => {
+        return this.props.data.map((item, i) => {
+            // the index is for something previous cards
+            if(i < this.state.index) { return null; }
+
             // only the first position card
             // whenever you are using a list you have to assign a key
-            if(index === 0){
+            if(i === this.state.index){
                 return (
                     <Animated.View
                         key={item.id}
@@ -133,6 +139,7 @@ class Deck extends Component {
                 );
             }
 
+            // other cards not part of previous or current index jsut make regular card
             return this.props.renderCard(item);
         });
     }

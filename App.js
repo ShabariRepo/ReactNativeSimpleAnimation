@@ -17,8 +17,9 @@ const DATA = [
 
 export default class App extends React.Component {
 
-  renderCard(item){
-    return(
+  // render each card
+  renderCard(item) {
+    return (
       <Card
         key={item.id}
         title={item.text}
@@ -28,20 +29,34 @@ export default class App extends React.Component {
           I can Customize the shit out of this
         </Text>
         <Button
-          icon={{ name:'code' }}
+          icon={{ name: 'code' }}
           backgroundColor="#03a9f4"
           title="View Now!"
-         />
+        />
       </Card>
     );
   }
 
+  // render no cards card indicator
+  renderNoMoreCards() {
+    return (
+      <Card title="No More Cards">
+        <Text style={{ marginBottom: 10 }}>
+          There are no more cards to swipe for now..
+        </Text>
+        <Button backgroundColor="#03A9f4">Get More</Button>
+      </Card>
+    )
+  }
+
+  //render the deck
   render() {
     return (
       <View style={styles.container}>
         <Deck
           data={DATA}
           renderCard={this.renderCard}
+          renderNoMoreCards={this.renderNoMoreCards}
         />
       </View>
     );
