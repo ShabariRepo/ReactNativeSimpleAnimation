@@ -3,6 +3,8 @@ import { View, Animated, PanResponder, Dimensions } from 'react-native';
 
 // this is something that wont change over time so keep it outside
 const SCREEN_WIDTH = Dimensions.get('window').width;
+// thresh hold for swiping 1/4 of the screen
+const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
 
 class Deck extends Component {
 
@@ -28,8 +30,14 @@ class Deck extends Component {
                 // every time the user drags the finger take the the value and update current position
                 position.setValue({ x: gesture.dx })//to also move up and down , y: gesture.dy })
             },
-            onPanResponderRelease: () => {
-                this.resetPosition();
+            onPanResponderRelease: (event, gesture) => {
+                if (gesture.dx > SWIPE_THRESHOLD){
+                    // swipe right
+                } else if (gesture.dx < -SWIPE_THRESHOLD) {
+                    // swipe left (negative to indicate left)
+                } else {
+                    this.resetPosition();
+                }
             }
         });
 
