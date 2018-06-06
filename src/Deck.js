@@ -21,7 +21,9 @@ class Deck extends Component {
              */
             onStartShouldSetPanResponder: () => true,
             onPanResponderMove: (event, gesture) => {
-                console.log(gesture);
+                //debugger;  good for chrome debugger
+                //console.log(gesture);
+                // from the gesture object we need the dx and dy for the positions
             },
             onPanResponderRelease: () => {}
         });
@@ -45,7 +47,7 @@ class Deck extends Component {
 
     render() {
         return (
-            <View>
+            <View {...this.state.panResponder.panHandlers}>
                 {this.renderCards()}
             </View>
         );
