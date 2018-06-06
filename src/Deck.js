@@ -35,6 +35,23 @@ class Deck extends Component {
         this.state = { panResponder, position };
     }
 
+    // helper method to determine the styling for the top card
+    getCardStyle(){
+        // interpolation between the x location the card is dragged and rotation
+        const { position } = this.state;  // get access to the position property
+        // amount of input with the output of rotation
+        const rotate = position.x.interpolate({
+            inputRange: [-500, 0, 500],
+            outputRange: ['-120deg', '0deg', '120deg']
+        });
+
+        return {
+            ...this.state.position.getLayout(),
+            //transform: [{ rotate: rotate }] old version belos is ES6 version
+            transform: [{ rotate }]
+        };
+    }
+
     // render card
     renderCards() {
 
@@ -47,7 +64,7 @@ class Deck extends Component {
                 return (
                     <Animated.View
                         key={item.id}
-                        style={this.state.position.getLayout()}
+                        style={this.getCardStyle()}
                         {...this.state.panResponder.panHandlers}
                     >
                         {this.props.renderCard(item)}
