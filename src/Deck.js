@@ -92,7 +92,7 @@ class Deck extends Component {
         this.state.position.setValue({ x: 0, y: 0 });
         // NOT doing just this.state.index ++;
         // not modifying the existing value just resetting it using setState
-        this.setState({ index: this.state.index + 1 })
+        this.setState({ index: this.state.index++ })
     }
 
     // helper method to determine the styling for the top card
@@ -167,6 +167,6 @@ const styles = {
         position: 'absolute',
         width: SCREEN_WIDTH
     }
-}
+};
 
 export default Deck;
