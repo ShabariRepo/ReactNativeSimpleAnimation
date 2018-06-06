@@ -40,19 +40,31 @@ class Deck extends Component {
 
         // pass in the list of data (array)
         // for each item in that array it calls renderCard()
-        return this.props.data.map(item => {
+        return this.props.data.map((item, index) => {
+            // only the first position card
+            // whenever you are using a list you have to assign a key
+            if(index === 0){
+                return (
+                    <Animated.View
+                        key={item.id}
+                        style={this.state.position.getLayout()}
+                        {...this.state.panResponder.panHandlers}
+                    >
+                        {this.props.renderCard(item)}
+                    </Animated.View>
+                );
+            }
+
             return this.props.renderCard(item);
         });
     }
 
     render() {
         return (
-            <Animated.View
-                style={this.state.position.getLayout()}
-                {...this.state.panResponder.panHandlers}
+            <View                
             >
                 {this.renderCards()}
-            </Animated.View>
+            </View>
         );
     }
 }
