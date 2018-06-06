@@ -6,6 +6,7 @@ class Deck extends Component {
     constructor(props) {
         super(props);
 
+        const position = new Animated.ValueXY();
         const panResponder = PanResponder.create({
             // always TRIPLE check the spelling here if its bad it wont fail but it wont work at ALL
             /*
@@ -21,18 +22,17 @@ class Deck extends Component {
              */
             onStartShouldSetPanResponder: () => true,
             onPanResponderMove: (event, gesture) => {
-                //debugger;  good for chrome debugger
-                //console.log(gesture);
-                // from the gesture object we need the dx and dy for the positions
+                // every time the user drags the finger take the the value and update current position
+                position.setValue({ x: gesture.dx, y: gesture.dy })
             },
             onPanResponderRelease: () => {}
         });
 
-        // a lot of official documentation will tell you to assign panResponder to the state
+        // a lot of official documentation will tell you to assign panResponder to the state (can apply to position too)
         // we will follow this convention but you can easily do just
         ////// this.panResponder = panResponder
         // you can create a panResponder to its own component (its outside of a state system)
-        this.state = { panResponder };
+        this.state = { panResponder, position };
     }
 
     // render card
@@ -47,9 +47,12 @@ class Deck extends Component {
 
     render() {
         return (
-            <View {...this.state.panResponder.panHandlers}>
+            <Animated.View
+                style={this.state.position.getLayout()}
+                {...this.state.panResponder.panHandlers}
+            >
                 {this.renderCards()}
-            </View>
+            </Animated.View>
         );
     }
 }
