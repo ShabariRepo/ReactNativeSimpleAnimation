@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { View, Animated, PanResponder } from 'react-native';
+import { View, Animated, PanResponder, Dimensions } from 'react-native';
+
+// this is something that wont change over time so keep it outside
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Deck extends Component {
 
@@ -23,7 +26,7 @@ class Deck extends Component {
             onStartShouldSetPanResponder: () => true,
             onPanResponderMove: (event, gesture) => {
                 // every time the user drags the finger take the the value and update current position
-                position.setValue({ x: gesture.dx, y: gesture.dy })
+                position.setValue({ x: gesture.dx })//to also move up and down , y: gesture.dy })
             },
             onPanResponderRelease: () => {}
         });
@@ -41,7 +44,8 @@ class Deck extends Component {
         const { position } = this.state;  // get access to the position property
         // amount of input with the output of rotation
         const rotate = position.x.interpolate({
-            inputRange: [-500, 0, 500],
+            // multiplying slows the rate of rotation(bigger value interpolated)
+            inputRange: [-SCREEN_WIDTH * 2.0, 0, SCREEN_WIDTH * 2.0],
             outputRange: ['-120deg', '0deg', '120deg']
         });
 
