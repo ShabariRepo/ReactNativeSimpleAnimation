@@ -28,7 +28,9 @@ class Deck extends Component {
                 // every time the user drags the finger take the the value and update current position
                 position.setValue({ x: gesture.dx })//to also move up and down , y: gesture.dy })
             },
-            onPanResponderRelease: () => {}
+            onPanResponderRelease: () => {
+                this.resetPosition();
+            }
         });
 
         // a lot of official documentation will tell you to assign panResponder to the state (can apply to position too)
@@ -36,6 +38,13 @@ class Deck extends Component {
         ////// this.panResponder = panResponder
         // you can create a panResponder to its own component (its outside of a state system)
         this.state = { panResponder, position };
+    }
+
+    // reset the position of the card to default (0, 0)
+    resetPosition(){        
+        Animated.spring(this.state.position, {
+            toValue: { x:0, y:0 }
+        }).start();
     }
 
     // helper method to determine the styling for the top card
