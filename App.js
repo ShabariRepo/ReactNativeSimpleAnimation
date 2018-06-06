@@ -26,11 +26,11 @@ export default class App extends React.Component {
         image={{ uri: item.uri }}
       >
         <Text style={{ marginBottom: 10 }}>
-          I can Customize the shit out of this
+          I can customize the Card further.
         </Text>
         <Button
           icon={{ name: 'code' }}
-          backgroundColor="#03a9f4"
+          backgroundColor="#03A9F4"
           title="View Now!"
         />
       </Card>
@@ -40,13 +40,16 @@ export default class App extends React.Component {
   // render no cards card indicator
   renderNoMoreCards() {
     return (
-      <Card title="No More Cards">
+      <Card title="All Done!">
         <Text style={{ marginBottom: 10 }}>
-          There are no more cards to swipe for now..
+          There's no more content here!
         </Text>
-        <Button backgroundColor="#03A9f4">Get More</Button>
+        <Button
+          backgroundColor="#03A9F4"
+          title="Get more!"
+        />
       </Card>
-    )
+    );
   }
 
   //render the deck

@@ -107,7 +107,7 @@ class Deck extends Component {
         });
 
         return {
-            ...this.state.position.getLayout(),
+            ...position.getLayout(),
             //transform: [{ rotate: rotate }] old version belos is ES6 version
             transform: [{ rotate }]
         };
@@ -115,42 +115,57 @@ class Deck extends Component {
 
     // render card
     renderCards() {
-        if(this.state.index >= this.props.data.length){
+        if (this.state.index >= this.props.data.length) {
             return this.props.renderNoMoreCards();
-        }
+          }
 
         // pass in the list of data (array)
         // for each item in that array it calls renderCard()
         return this.props.data.map((item, i) => {
             // the index is for something previous cards
-            if(i < this.state.index) { return null; }
+            if (i < this.state.index) { return null; }
 
             // only the first position card
             // whenever you are using a list you have to assign a key
-            if(i === this.state.index){
+            if (i === this.state.index) {
                 return (
-                    <Animated.View
-                        key={item.id}
-                        style={this.getCardStyle()}
-                        {...this.state.panResponder.panHandlers}
-                    >
-                        {this.props.renderCard(item)}
-                    </Animated.View>
+                  <Animated.View
+                    key={item.id}
+                    style={[this.getCardStyle(), styles.cardStyle]}
+                    {...this.state.panResponder.panHandlers}
+                  >
+                    {this.props.renderCard(item)}
+                  </Animated.View>
                 );
-            }
+              }
 
             // other cards not part of previous or current index jsut make regular card
-            return this.props.renderCard(item);
-        });
+            return (
+                <View key={item.id} style={styles.cardStyle}>
+                  {this.props.renderCard(item)}
+                </View>
+              );
+        }).reverse();
     }
 
     render() {
         return (
-            <View                
-            >
-                {this.renderCards()}
-            </View>
+          <View>
+            {this.renderCards()}
+          </View>
         );
+      }
+}
+
+const styles = {
+    /* 
+    position absolute works the same way as in the browser
+    the element will be taken out of the normal flow or layout of the app
+    --- here it will cause all the cards to stack up at the top of each screen
+    */
+    cardStyle: {
+        position: 'absolute',
+        width: SCREEN_WIDTH
     }
 }
 
