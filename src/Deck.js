@@ -92,7 +92,7 @@ class Deck extends Component {
         this.state.position.setValue({ x: 0, y: 0 });
         // NOT doing just this.state.index ++;
         // not modifying the existing value just resetting it using setState
-        this.setState({ index: this.state.index++ })
+        this.setState({ index: this.state.index + 1 })
     }
 
     // helper method to determine the styling for the top card
@@ -129,9 +129,10 @@ class Deck extends Component {
             // whenever you are using a list you have to assign a key
             if (i === this.state.index) {
                 return (
+                    //[this.getCardStyle(), styles.cardStyle]
                   <Animated.View
                     key={item.id}
-                    style={[this.getCardStyle(), styles.cardStyle]}
+                    style={this.getCardStyle()}
                     {...this.state.panResponder.panHandlers}
                   >
                     {this.props.renderCard(item)}
@@ -141,11 +142,12 @@ class Deck extends Component {
 
             // other cards not part of previous or current index jsut make regular card
             return (
-                <View key={item.id} style={styles.cardStyle}>
+                // style={styles.cardStyle}
+                <View key={item.id}>
                   {this.props.renderCard(item)}
                 </View>
               );
-        }).reverse();
+        });//.reverse();
     }
 
     render() {
